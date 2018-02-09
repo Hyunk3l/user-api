@@ -1,4 +1,4 @@
-package com.fabridinapoli.userapi.Application.Service.getusers
+package com.fabridinapoli.userapi.application.service.getusers
 
 import reactor.core.publisher.Flux
 

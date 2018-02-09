@@ -1,7 +1,7 @@
 package com.fabridinapoli.userapi.Infrastructure.framework.controller
 
-import com.fabridinapoli.userapi.Application.Service.getusers.GetUsers
-import com.fabridinapoli.userapi.Application.Service.getusers.GetUsersResponse
+import com.fabridinapoli.userapi.application.service.getusers.GetUsers
+import com.fabridinapoli.userapi.application.service.getusers.GetUsersResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.ResponseStatus
