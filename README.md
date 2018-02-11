@@ -12,3 +12,12 @@
 ```
 GET http://localhost:8000/users
 ```
+
+## Testing
+
+Using **Kluent** that is a Kluent is a ?Fluent Assertions? library written specifically for Kotlin [https://markusamshove.github.io/Kluent/](https://markusamshove.github.io/Kluent/).
+
+Run tests:
+```
+./gradlew test
+```
