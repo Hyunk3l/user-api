@@ -1,7 +1,7 @@
 package com.fabridinapoli.userapi.application.service.getusers
 
 import com.fabridinapoli.userapi.infrastructure.domain.user.InMemoryUserRepository
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.amshove.kluent.shouldEqual
 import org.junit.jupiter.api.Test
 
 class GetUsersShould {
@@ -14,6 +14,6 @@ class GetUsersShould {
 
         val users = getUsers.execute()
 
-        assertEquals(expectedUsers, users.blockFirst())
+        expectedUsers shouldEqual users.blockFirst()
     }
 }
