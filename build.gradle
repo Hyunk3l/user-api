@@ -47,5 +47,6 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('io.projectreactor:reactor-test')
+	testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.3")
 	testCompile("org.junit.jupiter:junit-jupiter-api:5.0.3")
 }
