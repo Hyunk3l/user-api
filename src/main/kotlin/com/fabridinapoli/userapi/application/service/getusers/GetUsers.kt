@@ -1,20 +1,16 @@
 package com.fabridinapoli.userapi.application.service.getusers
 
+import com.fabridinapoli.userapi.domain.user.UserRepository
 import reactor.core.publisher.Flux
+import reactor.core.publisher.toFlux
 
-class GetUsers {
+class GetUsers(private val userRepository: UserRepository) {
 
     fun execute(): Flux<GetUsersResponse> {
 
-        val getUsersResponseList: MutableList<GetUsersResponse> = mutableListOf(
-                GetUsersResponse(1, "test 1"),
-                GetUsersResponse(2, "test 2"),
-                GetUsersResponse(3, "test 3"),
-                GetUsersResponse(4, "test 4"),
-                GetUsersResponse(5, "test 5"),
-                GetUsersResponse(6, "test 6")
-        )
-
-        return Flux.fromIterable(getUsersResponseList)
+        return userRepository
+                .findAll()
+                .map { GetUsersResponse(it.id, it.name) }
+                .toFlux()
     }
 }

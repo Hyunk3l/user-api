@@ -1,4 +1,4 @@
-package com.fabridinapoli.userapi.Infrastructure.framework.controller
+package com.fabridinapoli.userapi.infrastructure.framework.controller
 
 import com.fabridinapoli.userapi.application.service.getusers.GetUsers
 import com.fabridinapoli.userapi.application.service.getusers.GetUsersResponse

@@ -1,3 +1,3 @@
-package com.fabridinapoli.userapi.Domain.user
+package com.fabridinapoli.userapi.domain.user
 
-class User(id: Int, name: String)
+class User(val id: Int, val name: String)

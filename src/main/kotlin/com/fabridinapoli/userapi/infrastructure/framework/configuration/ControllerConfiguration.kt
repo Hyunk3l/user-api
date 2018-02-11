@@ -1,7 +1,8 @@
-package com.fabridinapoli.userapi.Infrastructure.framework.configuration
+package com.fabridinapoli.userapi.infrastructure.framework.configuration
 
 import com.fabridinapoli.userapi.application.service.getusers.GetUsers
-import com.fabridinapoli.userapi.Infrastructure.framework.controller.UsersController
+import com.fabridinapoli.userapi.infrastructure.domain.user.InMemoryUserRepository
+import com.fabridinapoli.userapi.infrastructure.framework.controller.UsersController
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -9,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 class ControllerConfiguration {
 
     @Bean
-    fun getUsers() = GetUsers()
+    fun getUsers() = GetUsers(InMemoryUserRepository())
 
     @Bean
     fun usersController(getUsers: GetUsers) = UsersController(getUsers)

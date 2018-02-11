@@ -1,4 +1,4 @@
-package com.fabridinapoli.userapi.Infrastructure.framework
+package com.fabridinapoli.userapi.infrastructure.framework
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
