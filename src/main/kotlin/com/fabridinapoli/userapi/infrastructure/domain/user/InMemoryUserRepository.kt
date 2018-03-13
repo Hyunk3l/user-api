@@ -1,16 +1,19 @@
 package com.fabridinapoli.userapi.infrastructure.domain.user
 
 import com.fabridinapoli.userapi.domain.user.User
+import com.fabridinapoli.userapi.domain.user.UserId
 import com.fabridinapoli.userapi.domain.user.UserRepository
+import java.util.UUID
 
 class InMemoryUserRepository : UserRepository {
 
     private var users: MutableList<User> = mutableListOf()
 
     constructor() {
+
         this.users = mutableListOf(
-                User(1, "Fabri"),
-                User(2, "John")
+                User(UserId(UUID.randomUUID()), "Fabri"),
+                User(UserId(UUID.randomUUID()), "John")
         )
     }
 
