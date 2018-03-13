@@ -11,6 +11,7 @@ class GetUsers(private val userRepository: UserRepository) {
         return userRepository
                 .findAll()
                 .map { GetUsersResponse(it.id, it.name) }
+                .toList()
                 .toFlux()
     }
 }
