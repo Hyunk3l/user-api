@@ -9,8 +9,7 @@ class InMemoryUserRepository : UserRepository {
 
     private var users: MutableList<User> = mutableListOf()
 
-    constructor() {
-
+    init {
         this.users = mutableListOf(
                 User(UserId(UUID.randomUUID().toString()), "Fabri"),
                 User(UserId(UUID.randomUUID().toString()), "John")
