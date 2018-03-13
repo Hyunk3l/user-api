@@ -12,8 +12,8 @@ class InMemoryUserRepository : UserRepository {
     constructor() {
 
         this.users = mutableListOf(
-                User(UserId(UUID.randomUUID()), "Fabri"),
-                User(UserId(UUID.randomUUID()), "John")
+                User(UserId(UUID.randomUUID().toString()), "Fabri"),
+                User(UserId(UUID.randomUUID().toString()), "John")
         )
     }
 

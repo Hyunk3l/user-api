@@ -11,7 +11,7 @@ import java.util.UUID
 class GetUsersShould {
 
     companion object {
-        val VALID_USER_ID: UserId = UserId(UUID.randomUUID())
+        val VALID_USER_ID: UserId = UserId(UUID.randomUUID().toString())
         const val VALID_USER_NAME: String = "John"
     }
 
