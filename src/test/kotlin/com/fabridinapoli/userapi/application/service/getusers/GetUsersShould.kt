@@ -2,7 +2,7 @@ package com.fabridinapoli.userapi.application.service.getusers
 
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserId
-import com.fabridinapoli.userapi.infrastructure.domain.user.InMemoryUserRepository
+import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldEqual
 import org.junit.jupiter.api.Test

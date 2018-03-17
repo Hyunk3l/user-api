@@ -47,6 +47,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-webflux')
 	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
 
+	// Infrastructure
+	compile 'io.searchbox:jest:5.3.3'
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('io.projectreactor:reactor-test')
 	testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.3")

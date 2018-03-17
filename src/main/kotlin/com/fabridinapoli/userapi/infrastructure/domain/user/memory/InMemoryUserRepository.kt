@@ -1,4 +1,4 @@
-package com.fabridinapoli.userapi.infrastructure.domain.user
+package com.fabridinapoli.userapi.infrastructure.domain.user.memory
 
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserId
