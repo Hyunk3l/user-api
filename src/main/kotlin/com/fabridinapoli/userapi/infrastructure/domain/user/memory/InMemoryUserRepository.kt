@@ -11,12 +11,16 @@ class InMemoryUserRepository : UserRepository {
 
     init {
         this.users = mutableListOf(
-                User(UserId(UUID.randomUUID().toString()), "Fabri"),
-                User(UserId(UUID.randomUUID().toString()), "John")
+                User(UserId(UUID.randomUUID().toString()), "Fabri", "Di Napoli", "anemail1@test.com", "12345"),
+                User(UserId(UUID.randomUUID().toString()), "John", "Smith", "anemail@test.com", "12345")
         )
     }
 
     override fun findAll(): MutableList<User> = users
+
+    override fun save(user: User) {
+        users.add(user)
+    }
 
     fun setUsers(users: MutableList<User>) {
         this.users = users

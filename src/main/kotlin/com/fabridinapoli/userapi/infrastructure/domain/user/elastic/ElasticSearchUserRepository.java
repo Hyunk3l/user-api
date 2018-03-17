@@ -12,4 +12,9 @@ public class ElasticSearchUserRepository implements UserRepository {
     public List<User> findAll() {
         return null;
     }
+
+    @Override
+    public void save(@NotNull User user) {
+
+    }
 }
