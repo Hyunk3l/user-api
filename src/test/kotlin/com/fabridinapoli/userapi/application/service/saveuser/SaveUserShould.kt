@@ -11,7 +11,7 @@ class SaveUserShould {
     companion object {
         const val VALID_NAME: String = "Fabri"
         const val VALID_SURNAME: String = "Di Napoli"
-        const val VALID_EMAIL: String = "fabri.dinapoli@gmail.com"
+        const val VALID_EMAIL: String = "a.random.email@gmail.com"
         const val VALID_PASSWORD: String = "123456"
     }
 

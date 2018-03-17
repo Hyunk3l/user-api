@@ -19,7 +19,7 @@ class InMemoryUserRepository : UserRepository {
     override fun findAll(): MutableList<User> = users
 
     override fun save(user: User) {
-        users.add(user)
+        this.users.add(user)
     }
 
     fun setUsers(users: MutableList<User>) {
