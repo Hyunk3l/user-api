@@ -13,7 +13,6 @@ import reactor.core.publisher.Mono
 import javax.ws.rs.Consumes
 import javax.ws.rs.Produces
 
-
 @RestController
 class UsersController(val getUsers: GetUsers, val saveUser: SaveUser) {
 
