@@ -14,7 +14,7 @@ class GetUsersShould {
     fun `return a list of valid users`() {
         val inMemoryUserRepository = InMemoryUserRepository()
         inMemoryUserRepository.setUsers(createUsers())
-        val expectedUsers = GetUsersResponse(VALID_USER_ID.id, VALID_NAME, VALID_SURNAME)
+        val expectedUsers = GetUsersResponse(VALID_USER_ID.value, VALID_NAME, VALID_SURNAME)
         val getUsers = GetUsers(inMemoryUserRepository)
 
         val users = getUsers.execute()

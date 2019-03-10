@@ -19,7 +19,7 @@ class SaveUser(private val userRepository: UserRepository) {
         )
         userRepository.save(user)
 
-        return SaveUserResponse(user.id.id).toMono()
+        return SaveUserResponse(user.id.value).toMono()
     }
 }
 
