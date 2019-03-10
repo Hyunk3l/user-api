@@ -19,6 +19,7 @@ class UsersController(val getUsers: GetUsers, val saveUser: SaveUser) {
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     fun getUsers(): Flux<GetUsersResponse> {
+        NAME
         return getUsers.execute()
     }
 
