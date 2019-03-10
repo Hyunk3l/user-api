@@ -1,4 +1,4 @@
-package com.fabridinapoli.userapi
+package com.fabridinapoli.userapi.infrastructure.framework
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -12,5 +12,4 @@ class UserApiApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }
