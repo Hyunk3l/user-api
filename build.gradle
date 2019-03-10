@@ -1,7 +1,8 @@
 buildscript {
 	ext {
-		kotlinVersion = '1.2.30'
+		kotlinVersion = '1.3.21'
 		springBootVersion = '2.0.0.RELEASE'
+		spekVersion = '2.0.0-rc.1'
 	}
 	repositories {
 		mavenCentral()
@@ -42,17 +43,25 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-rest')
-	compile('org.springframework.boot:spring-boot-starter-jersey')
-	compile('org.springframework.boot:spring-boot-starter-webflux')
-	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+	implementation('org.springframework.boot:spring-boot-starter-data-rest')
+	implementation('org.springframework.boot:spring-boot-starter-jersey')
+	implementation('org.springframework.boot:spring-boot-starter-webflux')
+	implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}"
 
 	// Infrastructure
-	compile 'io.searchbox:jest:5.3.3'
+	implementation 'io.searchbox:jest:5.3.3'
 
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	testCompile('io.projectreactor:reactor-test')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('io.projectreactor:reactor-test')
 	testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.3")
-	testCompile("org.junit.jupiter:junit-jupiter-api:5.0.3")
-	testCompile('org.amshove.kluent:kluent:1.34')
+	testImplementation("org.junit.jupiter:junit-jupiter-api:5.0.3")
+
+	// Kluent: fluent interface for tests.
+	testImplementation('org.amshove.kluent:kluent:1.34')
+
+	// Spek Framework.
+	testImplementation "org.spekframework.spek2:spek-dsl-jvm:${spekVersion}"
+	testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:${spekVersion}"
+	testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
 }
