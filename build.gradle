@@ -65,3 +65,9 @@ dependencies {
 	testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:${spekVersion}"
 	testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
 }
+
+test {
+	useJUnitPlatform {
+		includeEngines 'spek2'
+	}
+}

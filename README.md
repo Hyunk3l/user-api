@@ -36,6 +36,9 @@ you'll get something like:
 
 ## Testing
 
+### Install Spek2 framework Idea plugin
+Install the plugin or visit [the page](https://plugins.jetbrains.com/plugin/10915-spek-framework)
+
 Using **Kluent** that is a Kluent is a ?Fluent Assertions? library written specifically for Kotlin [https://markusamshove.github.io/Kluent/](https://markusamshove.github.io/Kluent/).
 
 Run tests:
