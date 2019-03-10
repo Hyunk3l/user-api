@@ -10,14 +10,6 @@ import java.util.UUID
 
 class GetUsersShould {
 
-    companion object {
-        val VALID_USER_ID: UserId = UserId(UUID.randomUUID().toString())
-        const val VALID_NAME: String = "John"
-        const val VALID_SURNAME: String = "Smith"
-        const val VALID_EMAIL: String = "anemail@test.com"
-        const val VALID_PASSWORD: String = "123456"
-    }
-
     @Test
     fun `return a list of valid users`() {
         val inMemoryUserRepository = InMemoryUserRepository()
@@ -45,5 +37,13 @@ class GetUsersShould {
         val users = getUsers.execute()
 
         users.blockFirst().shouldBeNull()
+    }
+
+    companion object {
+        val VALID_USER_ID: UserId = UserId(UUID.randomUUID().toString())
+        const val VALID_NAME: String = "John"
+        const val VALID_SURNAME: String = "Smith"
+        const val VALID_EMAIL: String = "anemail@test.com"
+        const val VALID_PASSWORD: String = "123456"
     }
 }

@@ -8,13 +8,6 @@ import java.util.UUID
 
 class SaveUserShould {
 
-    companion object {
-        const val VALID_NAME: String = "Fabri"
-        const val VALID_SURNAME: String = "Di Napoli"
-        const val VALID_EMAIL: String = "a.random.email@gmail.com"
-        const val VALID_PASSWORD: String = "123456"
-    }
-
     @Test
     fun `save new user` () {
         val userRepository : UserRepository = InMemoryUserRepository()
@@ -27,6 +20,13 @@ class SaveUserShould {
         )
 
         val saveUserResponse : Mono<SaveUserResponse> = saveUser.execute(saveUserRequest)
-        UUID.fromString(saveUserResponse.block().id)
+        UUID.fromString(saveUserResponse.block()?.id)
+    }
+
+    companion object {
+        const val VALID_NAME: String = "Fabri"
+        const val VALID_SURNAME: String = "Di Napoli"
+        const val VALID_EMAIL: String = "a.random.email@gmail.com"
+        const val VALID_PASSWORD: String = "123456"
     }
 }

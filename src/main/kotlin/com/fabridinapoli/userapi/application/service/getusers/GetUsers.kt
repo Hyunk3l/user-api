@@ -15,3 +15,5 @@ class GetUsers(private val userRepository: UserRepository) {
                 .toFlux()
     }
 }
+
+data class GetUsersResponse(val id: String, val name: String, val surname: String)
