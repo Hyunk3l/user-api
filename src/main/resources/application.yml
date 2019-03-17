@@ -8,3 +8,5 @@ spring:
       indent_output: true
       write_dates_as_timestamps: false
       write_durations_as_timestamps: false
+  main:
+    allow-bean-definition-overriding: true
