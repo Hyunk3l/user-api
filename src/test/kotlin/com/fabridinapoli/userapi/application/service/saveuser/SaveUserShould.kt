@@ -1,11 +1,9 @@
 package com.fabridinapoli.userapi.application.service.saveuser
 
-import com.fabridinapoli.userapi.domain.user.EmailNotValidException
-import com.fabridinapoli.userapi.domain.user.User
-import com.fabridinapoli.userapi.domain.user.UserAlreadyExistsException
-import com.fabridinapoli.userapi.domain.user.UserRepository
+import com.fabridinapoli.userapi.domain.user.*
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.assertj.core.api.ThrowableAssert
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -33,10 +31,10 @@ class SaveUserShould {
 
     @Test
     fun `throw user already exists exception`() {
-        userRepository.save(User(NAME, SURNAME, EMAIL, PASSWORD))
+        userRepository.save(User(NAME, SURNAME, EMAIL.value, PASSWORD))
         val saveUserRequest = createSaveUserRequest()
 
-        val throwable = ThrowableAssert.catchThrowable {
+        val throwable = catchThrowable {
             SaveUser(userRepository).execute(saveUserRequest)
         }
 
@@ -63,15 +61,15 @@ class SaveUserShould {
         return SaveUserRequest(
                 NAME,
                 SURNAME,
-                EMAIL,
+                EMAIL.value,
                 PASSWORD
         )
     }
 
     companion object {
-        private const val NAME: String = "Fabri"
-        private const val SURNAME: String = "Di Napoli"
-        private const val EMAIL: String = "a.random.email@gmail.com"
-        private const val PASSWORD: String = "123456"
+        private const val NAME = "Fabri"
+        private const val SURNAME = "Di Napoli"
+        private const val PASSWORD = "123456"
+        private val EMAIL = Email("a.random.email@gmail.com")
     }
 }

@@ -1,5 +1,6 @@
 package com.fabridinapoli.userapi.application.service.getusers
 
+import com.fabridinapoli.userapi.domain.user.Email
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserId
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
@@ -40,10 +41,10 @@ class GetUsersShould {
     }
 
     companion object {
-        val VALID_USER_ID: UserId = UserId(UUID.randomUUID().toString())
-        const val VALID_NAME: String = "John"
-        const val VALID_SURNAME: String = "Smith"
-        const val VALID_EMAIL: String = "anemail@test.com"
-        const val VALID_PASSWORD: String = "123456"
+        private const val VALID_NAME: String = "John"
+        private const val VALID_SURNAME: String = "Smith"
+        private const val VALID_PASSWORD: String = "123456"
+        private val VALID_USER_ID: UserId = UserId(UUID.randomUUID().toString())
+        private val VALID_EMAIL = Email("anemail@test.com")
     }
 }

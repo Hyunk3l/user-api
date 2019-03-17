@@ -18,7 +18,7 @@ class InMemoryUserRepository : UserRepository {
     override fun findAll(): MutableList<User> = users
 
     override fun findBy(email: Email): User? {
-        return users.firstOrNull { it.email == email.value }
+        return users.firstOrNull { it.email == email }
     }
 
     override fun save(user: User) {
