@@ -63,12 +63,14 @@ class UsersControllerShould {
     @Test
     fun `return conflict when trying to create an existing user`() {
         createAListOfUsers()
+        val expectedResponse = """{"message": "User $EMAIL already exists"}"""
         val request = HttpEntity(RequestUser(NAME, SURNAME, EMAIL, PASSWORD))
 
         val response = restTemplate.postForEntity(PATH, request, String::class.java)
 
         assertThat(response).isNotNull
         assertThat(HttpStatus.CONFLICT).isEqualTo(response.statusCode)
+        JSONAssert.assertEquals(expectedResponse, response.body, LENIENT)
     }
 
     private fun readFromResources(path: String): String {

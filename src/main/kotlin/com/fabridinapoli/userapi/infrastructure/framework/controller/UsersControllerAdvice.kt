@@ -5,13 +5,15 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import java.lang.Exception
 
 @ControllerAdvice
 class UsersControllerAdvice {
 
     @ExceptionHandler(UserAlreadyExistsException::class)
-    fun handleException(exception: Exception) : ResponseEntity<String> {
-        return ResponseEntity("", HttpStatus.CONFLICT)
+    fun handleException(exception: Exception) : ResponseEntity<ErrorMessage> {
+        val message = exception.message
+        return ResponseEntity(ErrorMessage(message), HttpStatus.CONFLICT)
     }
 }
+
+data class ErrorMessage(val message: String?)
