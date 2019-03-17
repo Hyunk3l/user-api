@@ -2,11 +2,7 @@ package com.fabridinapoli.userapi.application.service.saveuser
 
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserAlreadyExistsException
-import com.fabridinapoli.userapi.domain.user.UserId
 import com.fabridinapoli.userapi.domain.user.UserRepository
-import reactor.core.publisher.Mono
-import reactor.core.publisher.toMono
-import java.util.UUID
 
 class SaveUser(private val userRepository: UserRepository) {
 
@@ -24,7 +20,6 @@ class SaveUser(private val userRepository: UserRepository) {
 
     private fun createUser(saveUserRequest: SaveUserRequest): User {
         return User(
-                UserId(UUID.randomUUID().toString()),
                 saveUserRequest.name,
                 saveUserRequest.surname,
                 saveUserRequest.email,

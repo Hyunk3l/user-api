@@ -2,7 +2,6 @@ package com.fabridinapoli.userapi.application.service.saveuser
 
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserAlreadyExistsException
-import com.fabridinapoli.userapi.domain.user.UserId
 import com.fabridinapoli.userapi.domain.user.UserRepository
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.assertj.core.api.Assertions.assertThat
@@ -33,7 +32,7 @@ class SaveUserShould {
 
     @Test
     fun `throw user already exists exception`() {
-        userRepository.save(User(UserId("uuid"), NAME, SURNAME, EMAIL, PASSWORD))
+        userRepository.save(User(NAME, SURNAME, EMAIL, PASSWORD))
         val saveUserRequest = createSaveUserRequest()
 
         val throwable = ThrowableAssert.catchThrowable {
