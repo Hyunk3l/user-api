@@ -1,5 +1,6 @@
 package com.fabridinapoli.userapi.application.service.saveuser
 
+import com.fabridinapoli.userapi.domain.user.EmailNotValidException
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserAlreadyExistsException
 import com.fabridinapoli.userapi.domain.user.UserRepository
@@ -40,6 +41,22 @@ class SaveUserShould {
         }
 
         assertThat(throwable).isInstanceOf(UserAlreadyExistsException::class.java)
+    }
+
+    @Test
+    fun `throw email not valid exception`() {
+        val saveUserRequest = SaveUserRequest(
+                NAME,
+                SURNAME,
+                "non-valid-email",
+                PASSWORD
+        )
+
+        val throwable = ThrowableAssert.catchThrowable {
+            SaveUser(userRepository).execute(saveUserRequest)
+        }
+
+        assertThat(throwable).isInstanceOf(EmailNotValidException::class.java)
     }
 
     private fun createSaveUserRequest(): SaveUserRequest {

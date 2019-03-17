@@ -4,7 +4,6 @@ import com.fabridinapoli.userapi.application.service.getusers.GetUsers
 import com.fabridinapoli.userapi.application.service.getusers.GetUsersResponse
 import com.fabridinapoli.userapi.application.service.saveuser.SaveUser
 import com.fabridinapoli.userapi.application.service.saveuser.SaveUserRequest
-import com.fabridinapoli.userapi.application.service.saveuser.SaveUserResponse
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.http.HttpStatus
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toMono
-import javax.xml.ws.Response
 
 @RestController
 @RequestMapping("/v1/users")

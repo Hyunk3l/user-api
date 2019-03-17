@@ -1,5 +1,6 @@
 package com.fabridinapoli.userapi.infrastructure.domain.user.memory
 
+import com.fabridinapoli.userapi.domain.user.Email
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserRepository
 
@@ -16,8 +17,8 @@ class InMemoryUserRepository : UserRepository {
 
     override fun findAll(): MutableList<User> = users
 
-    override fun findBy(email: String): User? {
-        return users.firstOrNull { it.email == email }
+    override fun findBy(email: Email): User? {
+        return users.firstOrNull { it.email == email.value }
     }
 
     override fun save(user: User) {

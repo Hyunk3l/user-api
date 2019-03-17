@@ -15,3 +15,15 @@ class User(val id: UserId,
 }
 
 data class UserId(val value: String = UUID.randomUUID().toString())
+
+class Email(val value: String) {
+    init {
+        if (!EMAIL_VALIDATION_REGEX.toRegex().matches(value)) {
+            throw EmailNotValidException("Email not valid")
+        }
+    }
+
+    companion object {
+        private const val EMAIL_VALIDATION_REGEX = """^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+${'$'}"""
+    }
+}

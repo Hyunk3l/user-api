@@ -73,6 +73,18 @@ class UsersControllerShould {
         JSONAssert.assertEquals(expectedResponse, response.body, LENIENT)
     }
 
+    @Test
+    fun `return bad request when trying to create a user with non valid email`() {
+        val expectedResponse = """{"messages": ["Email not valid"]}"""
+        val request = HttpEntity(RequestUser(NAME, SURNAME, NON_VALID_EMAIL, PASSWORD))
+
+        val response = restTemplate.postForEntity(PATH, request, String::class.java)
+
+        assertThat(response).isNotNull
+        assertThat(HttpStatus.BAD_REQUEST).isEqualTo(response.statusCode)
+        JSONAssert.assertEquals(expectedResponse, response.body, LENIENT)
+    }
+
     private fun readFromResources(path: String): String {
         return UsersControllerShould::class.java
                 .getResource(path)
@@ -85,11 +97,12 @@ class UsersControllerShould {
     }
 
     companion object {
-        const val PATH = "/v1/users"
-        const val USER_ID = "303c5cce-9c5a-4f40-97fe-80ca45fdcd86"
-        const val NAME = "Fabri"
-        const val SURNAME = "Di Napoli"
-        const val EMAIL = "some@email.com"
-        const val PASSWORD = "123456"
+        private const val PATH = "/v1/users"
+        private const val USER_ID = "303c5cce-9c5a-4f40-97fe-80ca45fdcd86"
+        private const val NAME = "Fabri"
+        private const val SURNAME = "Di Napoli"
+        private const val EMAIL = "some@email.com"
+        private const val PASSWORD = "123456"
+        private const val NON_VALID_EMAIL = "fake-email"
     }
 }
