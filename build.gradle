@@ -57,13 +57,14 @@ dependencies {
 	testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.3")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.0.3")
 
+	// Assertj.
+	testImplementation 'org.assertj:assertj-core:3.12.2'
+
+	// JSONAssert.
+	testImplementation 'org.skyscreamer:jsonassert:1.5.0'
+
 	// Kluent: fluent interface for tests.
 	testImplementation('org.amshove.kluent:kluent:1.34')
-
-	// Spek Framework.
-	testImplementation "org.spekframework.spek2:spek-dsl-jvm:${spekVersion}"
-	testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:${spekVersion}"
-	testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
 }
 
 test {
