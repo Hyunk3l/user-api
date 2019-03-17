@@ -9,7 +9,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.ThrowableAssert
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import reactor.core.publisher.Mono
 import java.util.UUID
 
 class SaveUserShould {
@@ -34,7 +33,7 @@ class SaveUserShould {
 
     @Test
     fun `throw user already exists exception`() {
-        userRepository.save(User(UserId("uuid"), VALID_NAME, VALID_SURNAME, VALID_EMAIL, VALID_PASSWORD))
+        userRepository.save(User(UserId("uuid"), NAME, SURNAME, EMAIL, PASSWORD))
         val saveUserRequest = createSaveUserRequest()
 
         val throwable = ThrowableAssert.catchThrowable {
@@ -46,17 +45,17 @@ class SaveUserShould {
 
     private fun createSaveUserRequest(): SaveUserRequest {
         return SaveUserRequest(
-                VALID_NAME,
-                VALID_SURNAME,
-                VALID_EMAIL,
-                VALID_PASSWORD
+                NAME,
+                SURNAME,
+                EMAIL,
+                PASSWORD
         )
     }
 
     companion object {
-        const val VALID_NAME: String = "Fabri"
-        const val VALID_SURNAME: String = "Di Napoli"
-        const val VALID_EMAIL: String = "a.random.email@gmail.com"
-        const val VALID_PASSWORD: String = "123456"
+        private const val NAME: String = "Fabri"
+        private const val SURNAME: String = "Di Napoli"
+        private const val EMAIL: String = "a.random.email@gmail.com"
+        private const val PASSWORD: String = "123456"
     }
 }
