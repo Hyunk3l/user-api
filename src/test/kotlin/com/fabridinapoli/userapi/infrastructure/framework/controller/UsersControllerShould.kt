@@ -35,7 +35,7 @@ class UsersControllerShould {
         createAListOfUsers()
         val expectedResponse = readFromResources("/responses/get_users.json")
 
-        val response = restTemplate.getForEntity("/users", String::class.java)
+        val response = restTemplate.getForEntity(PATH, String::class.java)
 
         assertThat(response).isNotNull
         assertThat(HttpStatus.OK).isEqualTo(response.statusCode)
@@ -46,7 +46,7 @@ class UsersControllerShould {
     fun `create a new user`() {
         val request = HttpEntity(JsonUser(NAME, SURNAME, EMAIL, PASSWORD))
 
-        val response = restTemplate.postForEntity("/users", request, String::class.java)
+        val response = restTemplate.postForEntity(PATH, request, String::class.java)
 
         assertThat(response).isNotNull
         assertThat(HttpStatus.CREATED).isEqualTo(response.statusCode)
@@ -64,7 +64,7 @@ class UsersControllerShould {
         createAListOfUsers()
         val request = HttpEntity(JsonUser(NAME, SURNAME, EMAIL, PASSWORD))
 
-        val response = restTemplate.postForEntity("/users", request, String::class.java)
+        val response = restTemplate.postForEntity(PATH, request, String::class.java)
 
         assertThat(response).isNotNull
         assertThat(HttpStatus.CONFLICT).isEqualTo(response.statusCode)
@@ -82,6 +82,7 @@ class UsersControllerShould {
     }
 
     companion object {
+        const val PATH = "/v1/users"
         const val USER_ID = "303c5cce-9c5a-4f40-97fe-80ca45fdcd86"
         const val NAME = "Fabri"
         const val SURNAME = "Di Napoli"

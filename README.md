@@ -11,12 +11,12 @@
 
 1. Get list of users
 ```
-GET http://localhost:8000/users
+GET http://localhost:8000/v1/users
 ```
 
 2. Create a new user
 ```
-curl -XPOST http://127.0.0.1:8000/users \
+curl -XPOST http://127.0.0.1:8000/v1/users \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{

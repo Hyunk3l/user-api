@@ -14,13 +14,14 @@ import javax.ws.rs.Consumes
 import javax.ws.rs.Produces
 
 @RestController
+@RequestMapping("/v1/users")
 class UsersController(val getUsers: GetUsers, val saveUser: SaveUser) {
 
-    @GetMapping("/users")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     fun getUsers(): Flux<GetUsersResponse> = getUsers.execute()
 
-    @PostMapping("/users")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Produces(MediaType.APPLICATION_JSON_VALUE)
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
