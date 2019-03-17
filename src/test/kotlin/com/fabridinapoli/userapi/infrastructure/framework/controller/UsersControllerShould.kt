@@ -45,7 +45,7 @@ class UsersControllerShould {
     @Test
     fun `create a new user`() {
         userRepository.setUsers(mutableListOf())
-        val request = HttpEntity(JsonUser(NAME, SURNAME, EMAIL, PASSWORD))
+        val request = HttpEntity(RequestUser(NAME, SURNAME, EMAIL, PASSWORD))
 
         val response = restTemplate.postForEntity(PATH, request, String::class.java)
 
@@ -63,7 +63,7 @@ class UsersControllerShould {
     @Test
     fun `return conflict when trying to create an existing user`() {
         createAListOfUsers()
-        val request = HttpEntity(JsonUser(NAME, SURNAME, EMAIL, PASSWORD))
+        val request = HttpEntity(RequestUser(NAME, SURNAME, EMAIL, PASSWORD))
 
         val response = restTemplate.postForEntity(PATH, request, String::class.java)
 

@@ -5,6 +5,8 @@ import com.fabridinapoli.userapi.application.service.getusers.GetUsersResponse
 import com.fabridinapoli.userapi.application.service.saveuser.SaveUser
 import com.fabridinapoli.userapi.application.service.saveuser.SaveUserRequest
 import com.fabridinapoli.userapi.application.service.saveuser.SaveUserResponse
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
@@ -20,14 +22,20 @@ class UsersController(val getUsers: GetUsers, val saveUser: SaveUser) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun saveUser(@RequestBody jsonUser: JsonUser): Mono<SaveUserResponse> {
+    fun saveUser(@RequestBody requestUser: RequestUser): Mono<SaveUserResponse> {
         return saveUser.execute(
                 SaveUserRequest(
-                        jsonUser.name,
-                        jsonUser.surname,
-                        jsonUser.email,
-                        jsonUser.password
+                        requestUser.name,
+                        requestUser.surname,
+                        requestUser.email,
+                        requestUser.password
                 )
         )
     }
 }
+
+data class RequestUser @JsonCreator constructor(
+        @JsonProperty("name") val name: String,
+        @JsonProperty("surname") val surname: String,
+        @JsonProperty("email") val email: String,
+        @JsonProperty("password") val password: String)
