@@ -60,7 +60,7 @@ class UsersControllerShould {
     }
 
     @Test
-    fun `fail when trying to create an existing user`() {
+    fun `return conflict when trying to create an existing user`() {
         createAListOfUsers()
         val request = HttpEntity(JsonUser(NAME, SURNAME, EMAIL, PASSWORD))
 
