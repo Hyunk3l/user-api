@@ -18,12 +18,10 @@ class UsersController(val getUsers: GetUsers, val saveUser: SaveUser) {
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.OK)
-    fun getUsers(): Flux<GetUsersResponse> {
-        return getUsers.execute()
-    }
+    fun getUsers(): Flux<GetUsersResponse> = getUsers.execute()
 
     @PostMapping("/users")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     @Produces(MediaType.APPLICATION_JSON_VALUE)
     @Consumes(MediaType.APPLICATION_JSON_VALUE)
     fun saveUser(@RequestBody jsonUser: JsonUser): Mono<SaveUserResponse> {
