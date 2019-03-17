@@ -1,8 +1,6 @@
 package com.fabridinapoli.userapi.infrastructure.framework.controller
 
-import com.fabridinapoli.userapi.domain.user.Email
 import com.fabridinapoli.userapi.domain.user.User
-import com.fabridinapoli.userapi.domain.user.UserId
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -93,7 +91,7 @@ class UsersControllerShould {
     }
 
     private fun createAListOfUsers() {
-        val user = User(UserId(USER_ID), NAME, SURNAME, Email(EMAIL), PASSWORD)
+        val user = User(USER_ID, NAME, SURNAME, EMAIL, PASSWORD)
         userRepository.setUsers(mutableListOf(user))
     }
 

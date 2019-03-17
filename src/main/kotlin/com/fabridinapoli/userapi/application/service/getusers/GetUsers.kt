@@ -10,7 +10,7 @@ class GetUsers(private val userRepository: UserRepository) {
 
         return userRepository
                 .findAll()
-                .map { GetUsersResponse(it.id.value, it.name, it.surname) }
+                .map { GetUsersResponse(it.id.value, it.name.value, it.surname.value) }
                 .toList()
                 .toFlux()
     }

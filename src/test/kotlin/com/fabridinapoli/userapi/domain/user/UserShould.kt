@@ -11,9 +11,9 @@ class UserShould {
         val user = User(NAME, SURNAME, EMAIL, PASSWORD)
 
         assertThat(EMAIL).isEqualTo(user.email.value)
-        assertThat(NAME).isEqualTo(user.name)
-        assertThat(SURNAME).isEqualTo(user.surname)
-        assertThat(PASSWORD).isEqualTo(user.password)
+        assertThat(NAME).isEqualTo(user.name.value)
+        assertThat(SURNAME).isEqualTo(user.surname.value)
+        assertThat(PASSWORD).isEqualTo(user.password.value)
     }
 
     @Test
@@ -31,7 +31,6 @@ class UserShould {
         private const val SURNAME = "Di Napoli"
         private const val EMAIL = "email@email.com"
         private const val PASSWORD = "somepassword"
-
         private const val NON_VALID_EMAIL = "non-valid"
     }
 }
