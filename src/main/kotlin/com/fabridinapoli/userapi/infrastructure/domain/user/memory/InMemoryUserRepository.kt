@@ -18,6 +18,10 @@ class InMemoryUserRepository : UserRepository {
 
     override fun findAll(): MutableList<User> = users
 
+    override fun findBy(email: String): User? {
+        return users.firstOrNull { it.email == email }
+    }
+
     override fun save(user: User) {
         this.users.add(user)
     }

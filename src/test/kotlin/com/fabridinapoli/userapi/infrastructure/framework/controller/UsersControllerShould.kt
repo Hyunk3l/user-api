@@ -44,6 +44,7 @@ class UsersControllerShould {
 
     @Test
     fun `create a new user`() {
+        userRepository.setUsers(mutableListOf())
         val request = HttpEntity(JsonUser(NAME, SURNAME, EMAIL, PASSWORD))
 
         val response = restTemplate.postForEntity(PATH, request, String::class.java)
