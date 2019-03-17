@@ -1,6 +1,9 @@
 package com.fabridinapoli.userapi.application.service.saveuser
 
-import com.fabridinapoli.userapi.domain.user.*
+import com.fabridinapoli.userapi.domain.user.EmailNotValidException
+import com.fabridinapoli.userapi.domain.user.User
+import com.fabridinapoli.userapi.domain.user.UserAlreadyExistsException
+import com.fabridinapoli.userapi.domain.user.UserRepository
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
@@ -31,7 +34,7 @@ class SaveUserShould {
 
     @Test
     fun `throw user already exists exception`() {
-        userRepository.save(User(NAME, SURNAME, EMAIL.value, PASSWORD))
+        userRepository.save(User(NAME, SURNAME, EMAIL, PASSWORD))
         val saveUserRequest = createSaveUserRequest()
 
         val throwable = catchThrowable {
@@ -61,7 +64,7 @@ class SaveUserShould {
         return SaveUserRequest(
                 NAME,
                 SURNAME,
-                EMAIL.value,
+                EMAIL,
                 PASSWORD
         )
     }
@@ -70,6 +73,6 @@ class SaveUserShould {
         private const val NAME = "Fabri"
         private const val SURNAME = "Di Napoli"
         private const val PASSWORD = "123456"
-        private val EMAIL = Email("a.random.email@gmail.com")
+        private const val EMAIL = "a.random.email@gmail.com"
     }
 }
