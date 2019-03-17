@@ -49,7 +49,7 @@ class SaveUserShould {
         val saveUserRequest = SaveUserRequest(
                 NAME,
                 SURNAME,
-                "non-valid-email",
+                NON_VALID_EMAIL,
                 PASSWORD
         )
 
@@ -74,5 +74,6 @@ class SaveUserShould {
         private const val SURNAME = "Di Napoli"
         private const val PASSWORD = "123456"
         private const val EMAIL = "a.random.email@gmail.com"
+        private const val NON_VALID_EMAIL = "non-valid-email"
     }
 }

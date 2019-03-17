@@ -1,6 +1,5 @@
 package com.fabridinapoli.userapi.application.service.saveuser
 
-import com.fabridinapoli.userapi.domain.user.Email
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserAlreadyExistsException
 import com.fabridinapoli.userapi.domain.user.UserRepository
@@ -8,11 +7,12 @@ import com.fabridinapoli.userapi.domain.user.UserRepository
 class SaveUser(private val userRepository: UserRepository) {
 
     fun execute(saveUserRequest: SaveUserRequest): SaveUserResponse {
-        userRepository.findBy(Email(saveUserRequest.email))?.let {
+        val user = createUser(saveUserRequest)
+
+        userRepository.findBy(user.email)?.let {
             throw UserAlreadyExistsException("User ${saveUserRequest.email} already exists")
         }
 
-        val user = createUser(saveUserRequest)
         userRepository.save(user)
 
         return SaveUserResponse(user.id.value)
