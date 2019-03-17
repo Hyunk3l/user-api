@@ -10,7 +10,7 @@ import java.util.UUID
 
 class SaveUser(private val userRepository: UserRepository) {
 
-    fun execute(saveUserRequest: SaveUserRequest): Mono<SaveUserResponse> {
+    fun execute(saveUserRequest: SaveUserRequest): SaveUserResponse {
 
         userRepository.findBy(saveUserRequest.email)?.let {
             throw UserAlreadyExistsException("User ${saveUserRequest.email} already exists")
@@ -19,7 +19,7 @@ class SaveUser(private val userRepository: UserRepository) {
         val user = createUser(saveUserRequest)
         userRepository.save(user)
 
-        return SaveUserResponse(user.id.value).toMono()
+        return SaveUserResponse(user.id.value)
     }
 
     private fun createUser(saveUserRequest: SaveUserRequest): User {

@@ -28,7 +28,7 @@ class SaveUserShould {
         val saveUserRequest = createSaveUserRequest()
 
         val saveUserResponse = saveUser.execute(saveUserRequest)
-        UUID.fromString(saveUserResponse.block()?.id)
+        UUID.fromString(saveUserResponse.id)
     }
 
     @Test

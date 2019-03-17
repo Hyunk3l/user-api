@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import reactor.core.publisher.toMono
+import javax.xml.ws.Response
 
 @RestController
 @RequestMapping("/v1/users")
@@ -22,15 +24,16 @@ class UsersController(val getUsers: GetUsers, val saveUser: SaveUser) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun saveUser(@RequestBody requestUser: RequestUser): Mono<SaveUserResponse> {
+    fun saveUser(@RequestBody requestUser: RequestUser): Mono<ResponseId> {
         return saveUser.execute(
                 SaveUserRequest(
                         requestUser.name,
                         requestUser.surname,
                         requestUser.email,
                         requestUser.password
-                )
-        )
+                ))
+                .let { ResponseId(it.id) }
+                .toMono()
     }
 }
 
@@ -39,3 +42,5 @@ data class RequestUser @JsonCreator constructor(
         @JsonProperty("surname") val surname: String,
         @JsonProperty("email") val email: String,
         @JsonProperty("password") val password: String)
+
+class ResponseId(val id: String)
