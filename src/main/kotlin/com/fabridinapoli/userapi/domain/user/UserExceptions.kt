@@ -1,5 +1,8 @@
 package com.fabridinapoli.userapi.domain.user
 
-class UserAlreadyExistsException(message: String?) : RuntimeException(message)
+import com.fabridinapoli.userapi.domain.DomainException
+import com.fabridinapoli.userapi.domain.DomainValidationException
 
-class EmailNotValidException(message: String?) : RuntimeException(message)
+class UserAlreadyExistsException(message: String?) : DomainException(message)
+
+class EmailNotValidException(message: String?) : DomainValidationException(message)

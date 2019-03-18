@@ -18,7 +18,6 @@ class UserShould {
 
     @Test
     fun `throw an email not valid exception if email is not valid`() {
-
         val throwable = catchThrowable {
             User(NAME, SURNAME, NON_VALID_EMAIL, PASSWORD)
         }
