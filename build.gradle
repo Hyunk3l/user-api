@@ -31,6 +31,9 @@ dependencies {
 	// Infrastructure
 	implementation 'io.searchbox:jest:5.3.3'
 
+	// Arrow
+	implementation 'io.arrow-kt:arrow-core:0.10.3'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('io.projectreactor:reactor-test')
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'
