@@ -7,7 +7,7 @@ import org.junit.Test
 class UserShould {
 
     @Test
-    fun `create a valid user with random user id`() {
+    fun `be valid with random user id`() {
         val user = User(NAME, SURNAME, EMAIL, PASSWORD)
 
         assertThat(EMAIL).isEqualTo(user.email.value)
@@ -17,7 +17,7 @@ class UserShould {
     }
 
     @Test
-    fun `throw an email not valid exception if email is not valid`() {
+    fun `fail if mail is not valid`() {
         val throwable = catchThrowable {
             User(NAME, SURNAME, NON_VALID_EMAIL, PASSWORD)
         }
