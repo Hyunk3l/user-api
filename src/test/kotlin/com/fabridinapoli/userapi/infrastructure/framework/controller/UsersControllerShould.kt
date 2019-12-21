@@ -1,5 +1,6 @@
 package com.fabridinapoli.userapi.infrastructure.framework.controller
 
+import arrow.core.Either
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.assertj.core.api.Assertions.assertThat
@@ -91,8 +92,10 @@ class UsersControllerShould {
     }
 
     private fun createAListOfUsers() {
-        val user = User(USER_ID, NAME, SURNAME, EMAIL, PASSWORD)
-        userRepository.setUsers(mutableListOf(user))
+
+        when(val user = User.createOrErrors(USER_ID, NAME, SURNAME, EMAIL, PASSWORD)) {
+            is Either.Right -> userRepository.setUsers(mutableListOf(user.b))
+        }
     }
 
     companion object {

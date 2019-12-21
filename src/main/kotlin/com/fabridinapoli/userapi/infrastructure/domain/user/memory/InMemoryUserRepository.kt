@@ -3,16 +3,27 @@ package com.fabridinapoli.userapi.infrastructure.domain.user.memory
 import com.fabridinapoli.userapi.domain.user.Email
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserRepository
+import java.util.*
 
 class InMemoryUserRepository : UserRepository {
 
     private var users: MutableList<User> = mutableListOf()
 
     init {
-        this.users = mutableListOf(
-                User("Fabri", "Di Napoli", "anemail1@test.com", "12345"),
-                User("John", "Smith", "anemail@test.com", "12345")
-        )
+        User.createOrErrors(
+                UUID.randomUUID().toString(),
+                "Fabri",
+                "Di Napoli",
+                "anemail1@test.com",
+                "12345"
+        ).map { this.users.add(it) }
+        User.createOrErrors(
+                UUID.randomUUID().toString(),
+                "John",
+                "Smith",
+                "anemail@test.com",
+                "12345"
+        ).map { this.users.add(it) }
     }
 
     override fun findAll(): MutableList<User> = users

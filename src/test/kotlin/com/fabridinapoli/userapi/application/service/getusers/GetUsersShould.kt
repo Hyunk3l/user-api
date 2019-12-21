@@ -1,11 +1,12 @@
 package com.fabridinapoli.userapi.application.service.getusers
 
+import arrow.core.Either
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.amshove.kluent.shouldBeNull
 import org.amshove.kluent.shouldEqual
 import org.junit.jupiter.api.Test
-import java.util.UUID
+import java.util.*
 
 class GetUsersShould {
 
@@ -22,9 +23,13 @@ class GetUsersShould {
     }
 
     private fun createUsers(): MutableList<User> {
-        return mutableListOf(
-                User(VALID_USER_ID, VALID_NAME, VALID_SURNAME, VALID_EMAIL, VALID_PASSWORD)
-        )
+        val user = User
+                .createOrErrors(VALID_USER_ID, VALID_NAME, VALID_SURNAME, VALID_EMAIL, VALID_PASSWORD)
+
+        return when (user) {
+            is Either.Right -> mutableListOf(user.b)
+            else -> throw Exception("aaa")
+        }
     }
 
     @Test

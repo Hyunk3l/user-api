@@ -1,8 +1,10 @@
 package com.fabridinapoli.userapi.application.service.saveuser
 
+import arrow.core.Either
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.domain.user.UserAlreadyExistsException
 import com.fabridinapoli.userapi.domain.user.UserRepository
+import java.util.*
 
 class SaveUser(private val userRepository: UserRepository) {
 
@@ -19,12 +21,18 @@ class SaveUser(private val userRepository: UserRepository) {
     }
 
     private fun createUser(saveUserRequest: SaveUserRequest): User {
-        return User(
+        val user = User.createOrErrors(
+                UUID.randomUUID().toString(),
                 saveUserRequest.name,
                 saveUserRequest.surname,
                 saveUserRequest.email,
                 saveUserRequest.password
         )
+
+        return when(user) {
+            is Either.Right -> user.b
+            else -> throw Exception("Cannot create a user")
+        }
     }
 }
 
