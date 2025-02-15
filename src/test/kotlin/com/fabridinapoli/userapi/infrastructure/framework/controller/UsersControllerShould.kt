@@ -3,85 +3,87 @@ package com.fabridinapoli.userapi.infrastructure.framework.controller
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.skyscreamer.jsonassert.Customization
-import org.skyscreamer.jsonassert.JSONAssert
-import org.skyscreamer.jsonassert.JSONCompareMode
-import org.skyscreamer.jsonassert.JSONCompareMode.LENIENT
-import org.skyscreamer.jsonassert.RegularExpressionValueMatcher
-import org.skyscreamer.jsonassert.comparator.CustomComparator
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.BeforeEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpStatus
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.http.MediaType
+import org.springframework.test.context.ActiveProfiles
 
-
-@RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 class UsersControllerShould {
-
     @Autowired
     lateinit var userRepository: InMemoryUserRepository
-
+    
     @Autowired
-    lateinit var restTemplate: TestRestTemplate
+    lateinit var webTestClient: WebTestClient
+    
+    @BeforeEach
+    fun setup() {
+        userRepository.setUsers(mutableListOf())
+    }
 
     @Test
     fun `return a list of users`() {
         createAListOfUsers()
         val expectedResponse = readFromResources("/responses/get_users.json")
-
-        val response = restTemplate.getForEntity(PATH, String::class.java)
-
-        assertThat(response).isNotNull
-        assertThat(HttpStatus.OK).isEqualTo(response.statusCode)
-        JSONAssert.assertEquals(expectedResponse, response.body, LENIENT)
+        
+        webTestClient.get()
+            .uri(PATH)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody()
+            .json(expectedResponse)
     }
 
     @Test
     fun `create a new user`() {
-        userRepository.setUsers(mutableListOf())
-        val request = HttpEntity(RequestUser(NAME, SURNAME, EMAIL, PASSWORD))
-
-        val response = restTemplate.postForEntity(PATH, request, String::class.java)
-
-        assertThat(response).isNotNull
-        assertThat(HttpStatus.CREATED).isEqualTo(response.statusCode)
-        JSONAssert.assertEquals("""{"id":"x"}""", response.body,
-                CustomComparator(JSONCompareMode.STRICT,
-                        Customization("id",
-                                RegularExpressionValueMatcher("([a-z0-9\\-]+)")
-                        )
-                )
-        )
+        val request = RequestUser(NAME, SURNAME, EMAIL, PASSWORD)
+        
+        webTestClient.post()
+            .uri(PATH)
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(request)
+            .exchange()
+            .expectStatus().isCreated
+            .expectBody()
+            .jsonPath("$.id").exists()
+            .jsonPath("$.id").value { id: String ->
+                assertThat(id).matches("[a-z0-9\\-]+")
+            }
     }
 
     @Test
     fun `return conflict when trying to create an existing user`() {
         createAListOfUsers()
         val expectedResponse = """{"message": "User $EMAIL already exists"}"""
-        val request = HttpEntity(RequestUser(NAME, SURNAME, EMAIL, PASSWORD))
-
-        val response = restTemplate.postForEntity(PATH, request, String::class.java)
-
-        assertThat(response).isNotNull
-        assertThat(HttpStatus.CONFLICT).isEqualTo(response.statusCode)
-        JSONAssert.assertEquals(expectedResponse, response.body, LENIENT)
+        val request = RequestUser(NAME, SURNAME, EMAIL, PASSWORD)
+        
+        webTestClient.post()
+            .uri(PATH)
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(request)
+            .exchange()
+            .expectStatus().isEqualTo(409)
+            .expectBody()
+            .json(expectedResponse)
     }
 
     @Test
     fun `return bad request when trying to create a user with non valid email`() {
         val expectedResponse = """{"messages": ["Email not valid"]}"""
-        val request = HttpEntity(RequestUser(NAME, SURNAME, NON_VALID_EMAIL, PASSWORD))
-
-        val response = restTemplate.postForEntity(PATH, request, String::class.java)
-
-        assertThat(response).isNotNull
-        assertThat(HttpStatus.BAD_REQUEST).isEqualTo(response.statusCode)
-        JSONAssert.assertEquals(expectedResponse, response.body, LENIENT)
+        val request = RequestUser(NAME, SURNAME, NON_VALID_EMAIL, PASSWORD)
+        
+        webTestClient.post()
+            .uri(PATH)
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue(request)
+            .exchange()
+            .expectStatus().isBadRequest
+            .expectBody()
+            .json(expectedResponse)
     }
 
     private fun readFromResources(path: String): String {
