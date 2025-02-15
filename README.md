@@ -42,7 +42,6 @@ Run tests:
 ```
 
 ## Libraries
-* [Kluent](https://markusamshove.github.io/Kluent/).
 * [AssertJ](http://joel-costigliola.github.io/assertj/)
 * [JSONAssert](https://github.com/skyscreamer/JSONassert)
 

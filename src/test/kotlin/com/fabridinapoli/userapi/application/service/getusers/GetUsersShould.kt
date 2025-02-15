@@ -2,8 +2,7 @@ package com.fabridinapoli.userapi.application.service.getusers
 
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldEqual
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
@@ -18,7 +17,7 @@ class GetUsersShould {
 
         val users = getUsers.execute()
 
-        expectedUsers shouldEqual users.blockFirst()
+        assertThat(users.blockFirst()).isEqualTo(expectedUsers)
     }
 
     private fun createUsers(): MutableList<User> {
@@ -35,7 +34,7 @@ class GetUsersShould {
 
         val users = getUsers.execute()
 
-        users.blockFirst().shouldBeNull()
+        assertThat(users.blockFirst()).isNull()
     }
 
     companion object {
