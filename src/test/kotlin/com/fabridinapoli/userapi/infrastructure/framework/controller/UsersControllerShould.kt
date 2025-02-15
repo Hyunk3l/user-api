@@ -1,10 +1,12 @@
 package com.fabridinapoli.userapi.infrastructure.framework.controller
 
+import com.fabridinapoli.userapi.application.service.getusers.GetUsers
+import com.fabridinapoli.userapi.application.service.saveuser.SaveUser
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.skyscreamer.jsonassert.Customization
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
@@ -12,22 +14,28 @@ import org.skyscreamer.jsonassert.JSONCompareMode.LENIENT
 import org.skyscreamer.jsonassert.RegularExpressionValueMatcher
 import org.skyscreamer.jsonassert.comparator.CustomComparator
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpStatus
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.Import
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.test.web.reactive.server.WebTestClient
 
-
-@RunWith(SpringRunner::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ExtendWith(SpringExtension::class)
+@WebFluxTest(UsersController::class)
+@Import(InMemoryUserRepository::class)
 class UsersControllerShould {
 
     @Autowired
-    lateinit var userRepository: InMemoryUserRepository
+    private lateinit var webTestClient: WebTestClient
+
+    @MockBean
+    private lateinit var getUsers: GetUsers
+
+    @MockBean
+    private lateinit var saveUser: SaveUser
 
     @Autowired
-    lateinit var restTemplate: TestRestTemplate
+    private lateinit var userRepository: InMemoryUserRepository
 
     @Test
     fun `return a list of users`() {

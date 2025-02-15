@@ -2,6 +2,10 @@
 
 # User Api
 
+## Requirements
+- Java 17
+- Gradle 8.x
+
 ## How to run
 ```
 ./gradlew bootRun
@@ -42,9 +46,10 @@ Run tests:
 ```
 
 ## Libraries
-* [Kluent](https://markusamshove.github.io/Kluent/).
 * [AssertJ](http://joel-costigliola.github.io/assertj/)
 * [JSONAssert](https://github.com/skyscreamer/JSONassert)
+* Spring Boot 3.1.5
+* Kotlin 1.8.21
 
 ## Other links
 * [JSONAssert examples](https://www.baeldung.com/jsonassert)
