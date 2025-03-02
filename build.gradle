@@ -10,7 +10,7 @@ apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
 
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 17
+sourceCompatibility = 21
 
 repositories {
 	mavenCentral()
@@ -52,13 +52,13 @@ tasks.named('test') {
 compileKotlin {
 	kotlinOptions {
 		freeCompilerArgs = ['-Xjsr305=strict']
-		jvmTarget = '17'
+		jvmTarget = '21'
 	}
 }
 
 compileTestKotlin {
 	kotlinOptions {
 		freeCompilerArgs = ['-Xjsr305=strict']
-		jvmTarget = '17'
+		jvmTarget = '21'
 	}
 }
