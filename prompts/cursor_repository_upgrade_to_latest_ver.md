@@ -945,7 +945,7 @@ build is failing
 The build is actually succeeding, but there is a warning in your test code:
 
 ```
-w: file:///Users/fabrituber/code/user-api/src/test/kotlin/com/fabridinapoli/userapi/application/service/getusers/GetUsersShould.kt:21:23 'shouldEqual(T?): T' is deprecated. Use `shouldBeEqualTo`
+w: user-api/src/test/kotlin/com/fabridinapoli/userapi/application/service/getusers/GetUsersShould.kt:21:23 'shouldEqual(T?): T' is deprecated. Use `shouldBeEqualTo`
 ```
 
 This warning indicates that the `shouldEqual` method in your test is deprecated. You should update it to use `shouldBeEqualTo` instead.
@@ -953,7 +953,7 @@ This warning indicates that the `shouldEqual` method in your test is deprecated.
 Would you like me to update the test file to fix this warning?
 
 ```plaintext
-w: file:///Users/fabrituber/code/user-api/src/test/kotlin/com/fabridinapoli/userapi/application/service/getusers/GetUsersShould.kt:21:23 'shouldEqual(T?): T' is deprecated. Use `shouldBeEqualTo`
+w: user-api/src/test/kotlin/com/fabridinapoli/userapi/application/service/getusers/GetUsersShould.kt:21:23 'shouldEqual(T?): T' is deprecated. Use `shouldBeEqualTo`
 ```
 
 ---
