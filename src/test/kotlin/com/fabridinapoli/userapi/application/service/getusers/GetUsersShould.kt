@@ -2,8 +2,8 @@ package com.fabridinapoli.userapi.application.service.getusers
 
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
-import org.amshove.kluent.shouldBeNull
-import org.amshove.kluent.shouldEqual
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.nulls.shouldBeNull
 import org.junit.jupiter.api.Test
 import java.util.UUID
 
@@ -18,7 +18,7 @@ class GetUsersShould {
 
         val users = getUsers.execute()
 
-        expectedUsers shouldEqual users.blockFirst()
+        expectedUsers shouldBe users.blockFirst()
     }
 
     private fun createUsers(): MutableList<User> {
