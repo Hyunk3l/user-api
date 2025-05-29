@@ -6,8 +6,6 @@ import com.fabridinapoli.userapi.domain.user.UserAlreadyExistsException
 import com.fabridinapoli.userapi.domain.user.UserRepository
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.catchThrowable
-import org.assertj.core.api.ThrowableAssert
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.util.UUID
@@ -15,7 +13,6 @@ import java.util.UUID
 class SaveUserShould {
 
     private lateinit var userRepository: UserRepository
-
     private lateinit var saveUser: SaveUser
 
     @BeforeEach
@@ -25,7 +22,7 @@ class SaveUserShould {
     }
 
     @Test
-    fun `save new user` () {
+    fun `save new user`() {
         val saveUserRequest = createSaveUserRequest()
 
         val saveUserResponse = saveUser.execute(saveUserRequest)
@@ -37,7 +34,7 @@ class SaveUserShould {
         userRepository.save(User(NAME, SURNAME, EMAIL, PASSWORD))
         val saveUserRequest = createSaveUserRequest()
 
-        val throwable = catchThrowable {
+        val throwable = org.junit.jupiter.api.assertThrows<UserAlreadyExistsException> {
             SaveUser(userRepository).execute(saveUserRequest)
         }
 
@@ -53,27 +50,20 @@ class SaveUserShould {
                 PASSWORD
         )
 
-        val throwable = ThrowableAssert.catchThrowable {
+        val throwable = org.junit.jupiter.api.assertThrows<EmailNotValidException> {
             SaveUser(userRepository).execute(saveUserRequest)
         }
 
         assertThat(throwable).isInstanceOf(EmailNotValidException::class.java)
     }
 
-    private fun createSaveUserRequest(): SaveUserRequest {
-        return SaveUserRequest(
-                NAME,
-                SURNAME,
-                EMAIL,
-                PASSWORD
-        )
-    }
+    private fun createSaveUserRequest() = SaveUserRequest(NAME, SURNAME, EMAIL, PASSWORD)
 
     companion object {
         private const val NAME = "Fabri"
         private const val SURNAME = "Di Napoli"
+        private const val EMAIL = "some@email.com"
         private const val PASSWORD = "123456"
-        private const val EMAIL = "a.random.email@gmail.com"
-        private const val NON_VALID_EMAIL = "non-valid-email"
+        private const val NON_VALID_EMAIL = "fake-email"
     }
 }
