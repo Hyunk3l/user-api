@@ -3,8 +3,8 @@ package com.fabridinapoli.userapi.infrastructure.framework.controller
 import com.fabridinapoli.userapi.domain.user.User
 import com.fabridinapoli.userapi.infrastructure.domain.user.memory.InMemoryUserRepository
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.skyscreamer.jsonassert.Customization
 import org.skyscreamer.jsonassert.JSONAssert
 import org.skyscreamer.jsonassert.JSONCompareMode
@@ -13,44 +13,61 @@ import org.skyscreamer.jsonassert.RegularExpressionValueMatcher
 import org.skyscreamer.jsonassert.comparator.CustomComparator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpStatus
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.boot.test.web.server.LocalServerPort
+import org.springframework.test.web.reactive.server.WebTestClient
 
 
-@RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UsersControllerShould {
 
     @Autowired
     lateinit var userRepository: InMemoryUserRepository
 
-    @Autowired
-    lateinit var restTemplate: TestRestTemplate
+    lateinit var webTestClient: WebTestClient
+
+    @LocalServerPort
+    var port: Int = 0
+
+    @BeforeEach
+    fun setUp() {
+        webTestClient = WebTestClient.bindToServer()
+                .baseUrl("http://localhost:$port")
+                .build()
+    }
 
     @Test
     fun `return a list of users`() {
         createAListOfUsers()
         val expectedResponse = readFromResources("/responses/get_users.json")
 
-        val response = restTemplate.getForEntity(PATH, String::class.java)
+        val responseBody = webTestClient.get()
+                .uri(PATH)
+                .exchange()
+                .expectStatus().isOk
+                .expectBody(String::class.java)
+                .returnResult()
+                .responseBody
 
-        assertThat(response).isNotNull
-        assertThat(HttpStatus.OK).isEqualTo(response.statusCode)
-        JSONAssert.assertEquals(expectedResponse, response.body, LENIENT)
+        assertThat(responseBody).isNotNull()
+        JSONAssert.assertEquals(expectedResponse, responseBody, LENIENT)
     }
 
     @Test
     fun `create a new user`() {
         userRepository.setUsers(mutableListOf())
-        val request = HttpEntity(RequestUser(NAME, SURNAME, EMAIL, PASSWORD))
+        val request = RequestUser(NAME, SURNAME, EMAIL, PASSWORD)
 
-        val response = restTemplate.postForEntity(PATH, request, String::class.java)
+        val responseBody = webTestClient.post()
+                .uri(PATH)
+                .bodyValue(request)
+                .exchange()
+                .expectStatus().isCreated
+                .expectBody(String::class.java)
+                .returnResult()
+                .responseBody
 
-        assertThat(response).isNotNull
-        assertThat(HttpStatus.CREATED).isEqualTo(response.statusCode)
-        JSONAssert.assertEquals("""{"id":"x"}""", response.body,
+        assertThat(responseBody).isNotNull()
+        JSONAssert.assertEquals("""{"id":"x"}""", responseBody,
                 CustomComparator(JSONCompareMode.STRICT,
                         Customization("id",
                                 RegularExpressionValueMatcher("([a-z0-9\\-]+)")
@@ -63,25 +80,37 @@ class UsersControllerShould {
     fun `return conflict when trying to create an existing user`() {
         createAListOfUsers()
         val expectedResponse = """{"message": "User $EMAIL already exists"}"""
-        val request = HttpEntity(RequestUser(NAME, SURNAME, EMAIL, PASSWORD))
+        val request = RequestUser(NAME, SURNAME, EMAIL, PASSWORD)
 
-        val response = restTemplate.postForEntity(PATH, request, String::class.java)
+        val responseBody = webTestClient.post()
+                .uri(PATH)
+                .bodyValue(request)
+                .exchange()
+                .expectStatus().isEqualTo(org.springframework.http.HttpStatus.CONFLICT)
+                .expectBody(String::class.java)
+                .returnResult()
+                .responseBody
 
-        assertThat(response).isNotNull
-        assertThat(HttpStatus.CONFLICT).isEqualTo(response.statusCode)
-        JSONAssert.assertEquals(expectedResponse, response.body, LENIENT)
+        assertThat(responseBody).isNotNull()
+        JSONAssert.assertEquals(expectedResponse, responseBody, LENIENT)
     }
 
     @Test
     fun `return bad request when trying to create a user with non valid email`() {
         val expectedResponse = """{"messages": ["Email not valid"]}"""
-        val request = HttpEntity(RequestUser(NAME, SURNAME, NON_VALID_EMAIL, PASSWORD))
+        val request = RequestUser(NAME, SURNAME, NON_VALID_EMAIL, PASSWORD)
 
-        val response = restTemplate.postForEntity(PATH, request, String::class.java)
+        val responseBody = webTestClient.post()
+                .uri(PATH)
+                .bodyValue(request)
+                .exchange()
+                .expectStatus().isBadRequest
+                .expectBody(String::class.java)
+                .returnResult()
+                .responseBody
 
-        assertThat(response).isNotNull
-        assertThat(HttpStatus.BAD_REQUEST).isEqualTo(response.statusCode)
-        JSONAssert.assertEquals(expectedResponse, response.body, LENIENT)
+        assertThat(responseBody).isNotNull()
+        JSONAssert.assertEquals(expectedResponse, responseBody, LENIENT)
     }
 
     private fun readFromResources(path: String): String {
