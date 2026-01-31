@@ -1,6 +1,6 @@
 package com.fabridinapoli.userapi.domain.user
 
-import java.util.UUID
+import java.util.*
 
 class User(val id: UserId,
            val name: Name,
@@ -31,7 +31,7 @@ data class Email(val value: String) {
         }
     }
 
-    companion object {
+    private companion object {
         private const val EMAIL_VALIDATION_REGEX = """^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+${'$'}"""
     }
 }
